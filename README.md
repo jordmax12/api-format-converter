@@ -1,6 +1,6 @@
 # API Format Converter
 
-A simple API service for converting data between different formats. This project provides endpoints to transform API responses and data structures according to specified conversion rules.
+A simple API service for converting data between different formats. This project provides endpoints to transform API responses and data structures according to specified conversion rules
 
 ## Features
 
