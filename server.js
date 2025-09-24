@@ -4,12 +4,14 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+const healthcheck = (res) => res.json({ status: 'OK', timestamp: new Date().toISOString() });
+
 app.get('/', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  return healthcheck(res);
 });
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  return healthcheck(res);
 });
 
 // Start the server (for local development)
