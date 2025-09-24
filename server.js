@@ -12,7 +12,13 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Test endpoint: http://localhost:${PORT}/test`);
-});
+// Start the server (for local development)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Test endpoint: http://localhost:${PORT}/test`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;

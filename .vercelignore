@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+.env
+.env.local
+.DS_Store
+__tests__
+*.test.js
+*.spec.js
+coverage
+.nyc_output
