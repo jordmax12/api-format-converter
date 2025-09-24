@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.json({ message: 'hello world' });
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
 app.get('/health', (req, res) => {
