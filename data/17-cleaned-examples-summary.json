@@ -1,0 +1,37 @@
+{
+  "description": "Cleaned API response examples - internal metadata and order fields removed",
+  "source_files": {
+    "json_with_metadata": "02-strict-string-to-json.json",
+    "xml_with_metadata": "04-strict-string-to-xml.xml"
+  },
+  "cleaned_files": {
+    "json_for_api": "15-cleaned-json-for-api.json",
+    "xml_for_api": "16-cleaned-xml-for-api.xml"
+  },
+  "size_comparison": {
+    "json": {
+      "original_size": 4583,
+      "cleaned_size": 4544,
+      "bytes_saved": 39,
+      "percentage_reduction": 1
+    },
+    "xml": {
+      "original_size": 9544,
+      "cleaned_size": 8013,
+      "bytes_saved": 1531,
+      "percentage_reduction": 16
+    }
+  },
+  "fields_removed": {
+    "json": [
+      "_metadata",
+      "_order",
+      "_originalOrder"
+    ],
+    "xml": [
+      "<_metadata>",
+      "<_order>"
+    ]
+  },
+  "use_case": "Perfect for API responses - removes internal conversion fields while preserving all business data"
+}

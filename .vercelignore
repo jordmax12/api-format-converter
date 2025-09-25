@@ -8,3 +8,8 @@ __tests__
 *.spec.js
 coverage
 .nyc_output
+old_data
+data
+instructions.pdf
+generate-cleaned-example.js
+generate-comprehensive-roundtrip-test.js

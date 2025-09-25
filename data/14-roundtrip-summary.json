@@ -1,0 +1,50 @@
+{
+  "original": {
+    "file": "01-original.txt",
+    "length": 1998,
+    "segments": 61
+  },
+  "strict_mode": {
+    "string_to_json_to_string": {
+      "json_file": "02-strict-string-to-json.json",
+      "result_file": "03-strict-json-to-string.txt",
+      "perfect_roundtrip": true,
+      "length": 1998
+    },
+    "string_to_xml_to_string": {
+      "xml_file": "04-strict-string-to-xml.xml",
+      "result_file": "05-strict-xml-to-string.txt",
+      "perfect_roundtrip": true,
+      "length": 1998
+    },
+    "json_to_xml_to_json": {
+      "xml_file": "06-strict-json-to-xml.xml",
+      "result_file": "07-strict-xml-to-json.json",
+      "structure_match": true
+    }
+  },
+  "non_strict_mode": {
+    "string_to_json_to_string": {
+      "json_file": "08-nonstrict-string-to-json.json",
+      "result_file": "09-nonstrict-json-to-string.txt",
+      "length": 1853,
+      "chars_saved": 145
+    },
+    "string_to_xml_to_string": {
+      "xml_file": "10-nonstrict-string-to-xml.xml",
+      "result_file": "11-nonstrict-xml-to-string.txt",
+      "matches_json_result": true,
+      "length": 1853
+    },
+    "json_to_xml_to_json": {
+      "xml_file": "12-nonstrict-json-to-xml.xml",
+      "result_file": "13-nonstrict-xml-to-json.json",
+      "structure_match": true
+    }
+  },
+  "statistics": {
+    "total_empty_elements": 123,
+    "segments_with_empty_elements": 37,
+    "empty_elements_percentage": 36
+  }
+}
