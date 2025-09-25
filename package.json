@@ -8,6 +8,7 @@
     "dev": "nodemon server.js",
     "build": "echo 'No build step required'",
     "test": "jest",
+    "test:converter": "jest __tests__/unit/converter.test.js",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "vercel-build": "echo 'No build step required'"
@@ -18,7 +19,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "jest": "^29.7.0",
