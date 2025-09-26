@@ -178,7 +178,7 @@ function createResponse(cleanedData, inputFormat, targetFormat, strictMode) {
     return {
       contentType,
       isJson: true,
-      dats: cleanedData
+      data: cleanedData
       // data: {
       //   success: true,
       //   inputFormat,
