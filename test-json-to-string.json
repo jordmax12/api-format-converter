@@ -1,4 +1,0 @@
-{
-  "input": "{\"segments\":[{\"segment_id\":\"ISA\",\"elements\":[\"00\",\"00\",\"12\",\"test\"]},{\"segment_id\":\"GS\",\"elements\":[\"PO\",\"test2\"]}]}",
-  "outputFormat": "string"
-}

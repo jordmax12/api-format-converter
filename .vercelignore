@@ -1,4 +1,5 @@
 node_modules
+.nyc_output
 npm-debug.log
 .env
 .env.local
@@ -6,10 +7,12 @@ npm-debug.log
 __tests__
 *.test.js
 *.spec.js
+eslint.config.js
+
 coverage
-.nyc_output
 old_data
 data
+
 instructions.pdf
 generate-cleaned-example.js
 generate-comprehensive-roundtrip-test.js
