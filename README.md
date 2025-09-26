@@ -9,6 +9,7 @@ A simple API service for converting data between different formats. This project
 - Custom string format parsing and generation
 - Input validation and error handling
 - Simple and lightweight Express.js server
+- Strict mode setting for round-trip support (mostly used for local testing)
 
 ## Supported Document Formats
 

@@ -77,10 +77,10 @@ function validateRequest(input, outputFormat) {
  * @returns {Object} - { inputFormat: string, separators: Object }
  */
 function detectInputFormat(inputData, customSeparators) {
-  const detection = determineFormat(inputData, ''); // Ignore HTTP Content-Type
+  const detection = determineFormat(inputData);
   const inputFormat = detection.format;
   const separators = customSeparators || detection.separators || { element: '*', segment: '~' };
-  
+
   return { inputFormat, separators };
 }
 
@@ -104,7 +104,7 @@ function validateSeparators(inputFormat, outputFormat, separators) {
       }
     };
   }
-  
+
   return { isValid: true };
 }
 
@@ -130,7 +130,7 @@ async function performConversion(inputData, inputFormat, targetFormat, separator
   if (inputFormat === 'string' && targetFormat === 'json') {
     return stringToJson(inputData, separators, strictMode);
   }
-  
+
   if (inputFormat === 'string' && targetFormat === 'xml') {
     return stringToXml(inputData, separators, strictMode);
   }
@@ -140,7 +140,7 @@ async function performConversion(inputData, inputFormat, targetFormat, separator
     const jsonData = typeof inputData === 'string' ? JSON.parse(inputData) : inputData;
     return jsonToString(jsonData, separators, strictMode);
   }
-  
+
   if (inputFormat === 'json' && targetFormat === 'xml') {
     const jsonData = typeof inputData === 'string' ? JSON.parse(inputData) : inputData;
     return jsonToXml(jsonData);
@@ -150,7 +150,7 @@ async function performConversion(inputData, inputFormat, targetFormat, separator
   if (inputFormat === 'xml' && targetFormat === 'string') {
     return await xmlToString(inputData, separators, strictMode);
   }
-  
+
   if (inputFormat === 'xml' && targetFormat === 'json') {
     return await xmlToJson(inputData);
   }
@@ -212,7 +212,7 @@ function handleConversionError(error) {
       }
     };
   }
-  
+
   if (error.message.includes('XML parsing failed')) {
     return {
       status: 400,
@@ -222,7 +222,7 @@ function handleConversionError(error) {
       }
     };
   }
-  
+
   if (error.message.includes('Input must be a non-empty string')) {
     return {
       status: 400,

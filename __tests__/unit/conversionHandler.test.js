@@ -29,14 +29,14 @@ describe('conversionHandler', () => {
   describe('validateRequest', () => {
     it('should return valid for correct parameters', () => {
       const result = validateRequest('test input', 'json');
-      
+
       expect(result.isValid).toBe(true);
       expect(result.error).toBeUndefined();
     });
 
     it('should return error for missing input', () => {
       const result = validateRequest(null, 'json');
-      
+
       expect(result.isValid).toBe(false);
       expect(result.error.status).toBe(400);
       expect(result.error.message.error).toBe('Missing required parameter');
@@ -45,14 +45,14 @@ describe('conversionHandler', () => {
 
     it('should return error for undefined input', () => {
       const result = validateRequest(undefined, 'json');
-      
+
       expect(result.isValid).toBe(false);
       expect(result.error.status).toBe(400);
     });
 
     it('should return error for missing outputFormat', () => {
       const result = validateRequest('test input', null);
-      
+
       expect(result.isValid).toBe(false);
       expect(result.error.status).toBe(400);
       expect(result.error.message.error).toBe('Missing required parameter');
@@ -61,7 +61,7 @@ describe('conversionHandler', () => {
 
     it('should return error for invalid outputFormat', () => {
       const result = validateRequest('test input', 'invalid');
-      
+
       expect(result.isValid).toBe(false);
       expect(result.error.status).toBe(400);
       expect(result.error.message.error).toBe('Invalid output format');
@@ -79,7 +79,7 @@ describe('conversionHandler', () => {
 
     it('should return error for empty string input', () => {
       const result = validateRequest('   ', 'json');
-      
+
       expect(result.isValid).toBe(false);
       expect(result.error.status).toBe(400);
       expect(result.error.message.error).toBe('Empty input');
@@ -88,7 +88,7 @@ describe('conversionHandler', () => {
 
     it('should accept non-string input (objects)', () => {
       const result = validateRequest({ test: 'data' }, 'string');
-      
+
       expect(result.isValid).toBe(true);
     });
   });
@@ -105,7 +105,7 @@ describe('conversionHandler', () => {
 
       expect(result.inputFormat).toBe('string');
       expect(result.separators).toEqual(customSeparators);
-      expect(determineFormat).toHaveBeenCalledWith('test*data~more*data~', '');
+      expect(determineFormat).toHaveBeenCalledWith('test*data~more*data~');
     });
 
     it('should detect format and use detected separators when custom not provided', () => {
@@ -146,20 +146,20 @@ describe('conversionHandler', () => {
   describe('validateSeparators', () => {
     it('should return valid when separators are provided for string format', () => {
       const result = validateSeparators('string', 'json', { element: '*', segment: '~' });
-      
+
       expect(result.isValid).toBe(true);
       expect(result.error).toBeUndefined();
     });
 
     it('should return valid for non-string formats without separators', () => {
       const result = validateSeparators('json', 'xml', null);
-      
+
       expect(result.isValid).toBe(true);
     });
 
     it('should return error when input is string format but no separators', () => {
       const result = validateSeparators('string', 'json', null);
-      
+
       expect(result.isValid).toBe(false);
       expect(result.error.status).toBe(400);
       expect(result.error.message.error).toBe('Unable to detect separators');
@@ -167,7 +167,7 @@ describe('conversionHandler', () => {
 
     it('should return error when output is string format but no separators', () => {
       const result = validateSeparators('json', 'string', null);
-      
+
       expect(result.isValid).toBe(false);
       expect(result.error.status).toBe(400);
       expect(result.error.message.error).toBe('Unable to detect separators');
@@ -175,7 +175,7 @@ describe('conversionHandler', () => {
 
     it('should return valid when both input and output are non-string formats', () => {
       const result = validateSeparators('json', 'xml', null);
-      
+
       expect(result.isValid).toBe(true);
     });
   });
@@ -187,21 +187,21 @@ describe('conversionHandler', () => {
     it('should return input data unchanged when input and target formats are the same (string)', async () => {
       const inputData = 'test*data~more*data~';
       const result = await performConversion(inputData, 'string', 'string', separators, strictMode);
-      
+
       expect(result).toBe(inputData);
     });
 
     it('should return parsed JSON when input and target formats are both json (string input)', async () => {
       const inputData = '{"test": "data"}';
       const result = await performConversion(inputData, 'json', 'json', separators, strictMode);
-      
+
       expect(result).toEqual({ test: 'data' });
     });
 
     it('should return object unchanged when input and target formats are both json (object input)', async () => {
       const inputData = { test: 'data' };
       const result = await performConversion(inputData, 'json', 'json', separators, strictMode);
-      
+
       expect(result).toBe(inputData);
     });
 
@@ -210,7 +210,7 @@ describe('conversionHandler', () => {
       stringToJson.mockReturnValue(mockResult);
 
       const result = await performConversion('TEST*data~', 'string', 'json', separators, strictMode);
-      
+
       expect(result).toBe(mockResult);
       expect(stringToJson).toHaveBeenCalledWith('TEST*data~', separators, strictMode);
     });
@@ -220,7 +220,7 @@ describe('conversionHandler', () => {
       stringToXml.mockReturnValue(mockResult);
 
       const result = await performConversion('TEST*data~', 'string', 'xml', separators, strictMode);
-      
+
       expect(result).toBe(mockResult);
       expect(stringToXml).toHaveBeenCalledWith('TEST*data~', separators, strictMode);
     });
@@ -231,7 +231,7 @@ describe('conversionHandler', () => {
       const jsonInput = '{"segments":[{"segment_id":"TEST","elements":["data"]}]}';
 
       const result = await performConversion(jsonInput, 'json', 'string', separators, strictMode);
-      
+
       expect(result).toBe(mockResult);
       expect(jsonToString).toHaveBeenCalledWith({ segments: [{ segment_id: 'TEST', elements: ['data'] }] }, separators, strictMode);
     });
@@ -242,7 +242,7 @@ describe('conversionHandler', () => {
       const jsonInput = { segments: [{ segment_id: 'TEST', elements: ['data'] }] };
 
       const result = await performConversion(jsonInput, 'json', 'string', separators, strictMode);
-      
+
       expect(result).toBe(mockResult);
       expect(jsonToString).toHaveBeenCalledWith(jsonInput, separators, strictMode);
     });
@@ -253,7 +253,7 @@ describe('conversionHandler', () => {
       const jsonInput = '{"segments":[{"segment_id":"TEST","elements":["data"]}]}';
 
       const result = await performConversion(jsonInput, 'json', 'xml', separators, strictMode);
-      
+
       expect(result).toBe(mockResult);
       expect(jsonToXml).toHaveBeenCalledWith({ segments: [{ segment_id: 'TEST', elements: ['data'] }] });
     });
@@ -264,7 +264,7 @@ describe('conversionHandler', () => {
       const jsonInput = { segments: [{ segment_id: 'TEST', elements: ['data'] }] };
 
       const result = await performConversion(jsonInput, 'json', 'xml', separators, strictMode);
-      
+
       expect(result).toBe(mockResult);
       expect(jsonToXml).toHaveBeenCalledWith(jsonInput);
     });
@@ -274,7 +274,7 @@ describe('conversionHandler', () => {
       xmlToString.mockResolvedValue(mockResult);
 
       const result = await performConversion('<root><TEST><TEST1>data</TEST1></TEST></root>', 'xml', 'string', separators, strictMode);
-      
+
       expect(result).toBe(mockResult);
       expect(xmlToString).toHaveBeenCalledWith('<root><TEST><TEST1>data</TEST1></TEST></root>', separators, strictMode);
     });
@@ -284,7 +284,7 @@ describe('conversionHandler', () => {
       xmlToJson.mockResolvedValue(mockResult);
 
       const result = await performConversion('<root><TEST><TEST1>data</TEST1></TEST></root>', 'xml', 'json', separators, strictMode);
-      
+
       expect(result).toBe(mockResult);
       expect(xmlToJson).toHaveBeenCalledWith('<root><TEST><TEST1>data</TEST1></TEST></root>');
     });

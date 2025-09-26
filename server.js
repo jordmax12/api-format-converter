@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Import conversion handler
 const {
   validateRequest,
   detectInputFormat,
@@ -15,12 +14,10 @@ const {
 app.use(express.json({ limit: '1mb' }));
 app.use(express.text({ limit: '1mb', type: ['text/plain', 'application/xml', 'text/xml'] }));
 
-// Environment variables
 const DEFAULT_STRICT_MODE = process.env.DEFAULT_STRICT_MODE === 'false' ? false : true;
 
 const healthcheck = (res) => res.json({ status: 'OK', timestamp: new Date().toISOString() });
 
-// Main conversion endpoint
 app.post('/convert', async (req, res) => {
   try {
     // Extract parameters from request body
