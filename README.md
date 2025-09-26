@@ -130,10 +130,18 @@ The API supports conversion between all three formats:
    cd api-format-converter
    ```
 
-2. Install dependencies:
+2. Install dependencies from lockfile:
    ```bash
    npm ci
    ```
+
+   or
+
+  (install dependencies from package.json)
+   ```bash
+   npm install
+   ```
+
 
 ## Usage
 
@@ -148,17 +156,3 @@ To start the server in development mode with auto-reload:
 ```bash
 npm run dev
 ```
-
-## Development
-
-### Project Structure
-```
-api-format-converter/
-├── server.js          # Main server file
-├── package.json       # Project dependencies and scripts
-└── README.md         # Project documentation
-```
-
-### Environment Variables
-
-- `PORT`: Server port (default: 3000)

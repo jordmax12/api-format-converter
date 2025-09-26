@@ -7,21 +7,21 @@ const {
 describe('cleanupUtils', () => {
   // Test data with internal fields
   const jsonWithMetadata = {
-    "segments": [
+    'segments': [
       {
-        "segment_id": "ProductID",
-        "elements": ["4", "8", "15"],
-        "_order": 0
+        'segment_id': 'ProductID',
+        'elements': ['4', '8', '15'],
+        '_order': 0
       },
       {
-        "segment_id": "AddressID", 
-        "elements": ["42", "108"],
-        "_order": 1,
-        "_originalOrder": 1
+        'segment_id': 'AddressID',
+        'elements': ['42', '108'],
+        '_order': 1,
+        '_originalOrder': 1
       }
     ],
-    "_metadata": {
-      "endsWithSeparator": true
+    '_metadata': {
+      'endsWithSeparator': true
     }
   };
 
@@ -45,7 +45,7 @@ describe('cleanupUtils', () => {
 
   it('cleanJsonForApi - should remove _metadata from JSON', () => {
     const result = cleanJsonForApi(jsonWithMetadata);
-    
+
     expect(result._metadata).toBeUndefined();
     expect(result.segments).toBeDefined();
     expect(result.segments.length).toBe(2);
@@ -53,7 +53,7 @@ describe('cleanupUtils', () => {
 
   it('cleanJsonForApi - should remove _order fields from segments', () => {
     const result = cleanJsonForApi(jsonWithMetadata);
-    
+
     result.segments.forEach(segment => {
       expect(segment._order).toBeUndefined();
       expect(segment._originalOrder).toBeUndefined();
@@ -64,22 +64,22 @@ describe('cleanupUtils', () => {
 
   it('cleanJsonForApi - should preserve segment data', () => {
     const result = cleanJsonForApi(jsonWithMetadata);
-    
+
     expect(result.segments[0]).toEqual({
-      "segment_id": "ProductID",
-      "elements": ["4", "8", "15"]
+      'segment_id': 'ProductID',
+      'elements': ['4', '8', '15']
     });
-    
+
     expect(result.segments[1]).toEqual({
-      "segment_id": "AddressID",
-      "elements": ["42", "108"]
+      'segment_id': 'AddressID',
+      'elements': ['42', '108']
     });
   });
 
   it('cleanJsonForApi - should not mutate original data', () => {
     const original = JSON.parse(JSON.stringify(jsonWithMetadata));
     cleanJsonForApi(jsonWithMetadata);
-    
+
     expect(jsonWithMetadata).toEqual(original);
     expect(jsonWithMetadata._metadata).toBeDefined();
     expect(jsonWithMetadata.segments[0]._order).toBeDefined();
@@ -87,14 +87,14 @@ describe('cleanupUtils', () => {
 
   it('cleanJsonForApi - should handle JSON without metadata', () => {
     const cleanJson = {
-      "segments": [
+      'segments': [
         {
-          "segment_id": "ProductID",
-          "elements": ["4", "8"]
+          'segment_id': 'ProductID',
+          'elements': ['4', '8']
         }
       ]
     };
-    
+
     const result = cleanJsonForApi(cleanJson);
     expect(result).toEqual(cleanJson);
   });
@@ -107,12 +107,12 @@ describe('cleanupUtils', () => {
   it('cleanJsonForApi - should handle null/undefined input', () => {
     expect(cleanJsonForApi(null)).toBe(null);
     expect(cleanJsonForApi(undefined)).toBe(undefined);
-    expect(cleanJsonForApi("string")).toBe("string");
+    expect(cleanJsonForApi('string')).toBe('string');
   });
 
   it('cleanXmlForApi - should remove _metadata from XML', async () => {
     const result = await cleanXmlForApi(xmlWithMetadata);
-    
+
     expect(result).toContain('<?xml version="1.0" encoding="UTF-8"?>');
     expect(result).toContain('<root>');
     expect(result).not.toContain('<_metadata>');
@@ -121,7 +121,7 @@ describe('cleanupUtils', () => {
 
   it('cleanXmlForApi - should remove _order fields from XML segments', async () => {
     const result = await cleanXmlForApi(xmlWithMetadata);
-    
+
     expect(result).not.toContain('<_order>');
     expect(result).toContain('<ProductID1>4</ProductID1>');
     expect(result).toContain('<AddressID1>42</AddressID1>');
@@ -129,7 +129,7 @@ describe('cleanupUtils', () => {
 
   it('cleanXmlForApi - should preserve segment data in XML', async () => {
     const result = await cleanXmlForApi(xmlWithMetadata);
-    
+
     expect(result).toContain('<ProductID>');
     expect(result).toContain('<ProductID1>4</ProductID1>');
     expect(result).toContain('<ProductID2>8</ProductID2>');
@@ -147,7 +147,7 @@ describe('cleanupUtils', () => {
     <ProductID2>8</ProductID2>
   </ProductID>
 </root>`;
-    
+
     const result = await cleanXmlForApi(cleanXml);
     expect(result).toContain('<ProductID1>4</ProductID1>');
     expect(result).toContain('<ProductID2>8</ProductID2>');
@@ -165,7 +165,7 @@ describe('cleanupUtils', () => {
     <ProductID1>8</ProductID1>
   </ProductID>
 </root>`;
-    
+
     const result = await cleanXmlForApi(xmlWithMultiple);
     expect(result).not.toContain('<_order>');
     expect(result).toContain('<ProductID1>4</ProductID1>');
@@ -187,20 +187,20 @@ describe('cleanupUtils', () => {
   it('cleanXmlForApi - should handle null/undefined input', async () => {
     expect(await cleanXmlForApi(null)).toBe(null);
     expect(await cleanXmlForApi(undefined)).toBe(undefined);
-    expect(await cleanXmlForApi("")).toBe("");
+    expect(await cleanXmlForApi('')).toBe('');
   });
 
   it('cleanForApi - should clean JSON objects when dataType is json', async () => {
     const result = await cleanForApi(jsonWithMetadata, 'json');
-    
+
     expect(result._metadata).toBeUndefined();
     expect(result.segments[0]._order).toBeUndefined();
-    expect(result.segments[0].segment_id).toBe("ProductID");
+    expect(result.segments[0].segment_id).toBe('ProductID');
   });
 
   it('cleanForApi - should clean XML strings when dataType is xml', async () => {
     const result = await cleanForApi(xmlWithMetadata, 'xml');
-    
+
     expect(typeof result).toBe('string');
     expect(result).not.toContain('<_metadata>');
     expect(result).not.toContain('<_order>');
@@ -210,7 +210,7 @@ describe('cleanupUtils', () => {
   it('cleanForApi - should pass through string format unchanged when dataType is string', async () => {
     const stringData = 'ProductID*4*8*15~AddressID*42*108~';
     const result = await cleanForApi(stringData, 'string');
-    
+
     expect(result).toBe(stringData);
   });
 
@@ -218,7 +218,7 @@ describe('cleanupUtils', () => {
     const result1 = await cleanForApi(jsonWithMetadata, 'JSON');
     const result2 = await cleanForApi(xmlWithMetadata, 'XML');
     const result3 = await cleanForApi('test', 'STRING');
-    
+
     expect(result1._metadata).toBeUndefined();
     expect(result2).not.toContain('<_metadata>');
     expect(result3).toBe('test');
@@ -227,7 +227,7 @@ describe('cleanupUtils', () => {
   it('cleanForApi - should default to string behavior for unknown dataType', async () => {
     const testData = 'some data';
     const result = await cleanForApi(testData, 'unknown');
-    
+
     expect(result).toBe(testData);
   });
 
