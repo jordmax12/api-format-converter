@@ -130,14 +130,14 @@ The API supports conversion between all three formats:
    cd api-format-converter
    ```
 
-2. Install dependencies from lockfile:
+2. Install dependencies:
+   
+   From lockfile (recommended):
    ```bash
    npm ci
    ```
-
-   or
-
-  (install dependencies from package.json)
+   
+   Or from package.json:
    ```bash
    npm install
    ```
