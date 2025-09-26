@@ -178,13 +178,14 @@ function createResponse(cleanedData, inputFormat, targetFormat, strictMode) {
     return {
       contentType,
       isJson: true,
-      data: {
-        success: true,
-        inputFormat,
-        outputFormat: targetFormat,
-        strict: strictMode,
-        data: cleanedData
-      }
+      dats: cleanedData
+      // data: {
+      //   success: true,
+      //   inputFormat,
+      //   outputFormat: targetFormat,
+      //   strict: strictMode,
+      //   data: cleanedData
+      // }
     };
   }
 
