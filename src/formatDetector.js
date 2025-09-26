@@ -12,7 +12,7 @@ function detectFormat(input) {
   if (!trimmedInput) {
     throw new Error('Input must be a non-empty string');
   }
-  
+
   if (detectJSON(trimmedInput)) {
     return 'json';
   }
@@ -75,10 +75,10 @@ function detectString(input) {
 
   for (const separators of commonSeparators) {
     const { element, segment } = separators;
-    
+
     if (input.includes(element) && input.includes(segment)) {
       const segments = input.split(segment).filter(s => s.trim());
-      
+
       if (segments.length > 0) {
         const validSegments = segments.every(seg => {
           const parts = seg.split(element);
@@ -102,11 +102,30 @@ function detectString(input) {
 function detectSeparators(input) {
   return detectString(input);
 }
+/**
+ * Determines input format using auto-detection
+ * @param {string} data - The input data
+ * @returns {Object} - { format: string, separators?: Object }
+ */
+function determineFormat(data) {
+  const format = detectFormat(data);
+  const result = { format };
+
+  if (format === 'string') {
+    const separators = detectSeparators(data);
+    if (separators) {
+      result.separators = separators;
+    }
+  }
+
+  return result;
+}
 
 module.exports = {
   detectFormat,
   detectSeparators,
   detectJSON,
   detectXML,
-  detectString
+  detectString,
+  determineFormat
 };

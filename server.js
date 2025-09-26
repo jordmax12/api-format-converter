@@ -49,7 +49,7 @@ app.post('/convert', async (req, res) => {
     const cleanedData = await cleanForApi(convertedData, targetFormat);
 
     // Create and send response
-    const response = createResponse(cleanedData, inputFormat, targetFormat, strictMode);
+    const response = createResponse(cleanedData, targetFormat);
     res.set('Content-Type', response.contentType);
 
     if (response.isJson) {

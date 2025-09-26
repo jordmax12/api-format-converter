@@ -1,4 +1,4 @@
-const { determineFormat } = require('./hybridDetector');
+const { determineFormat } = require('./formatDetector');
 const {
   stringToJson,
   jsonToString,
@@ -162,36 +162,19 @@ async function performConversion(inputData, inputFormat, targetFormat, separator
 /**
  * Creates the appropriate response based on target format
  * @param {any} cleanedData - The cleaned conversion result
- * @param {string} inputFormat - Detected input format
  * @param {string} targetFormat - Target output format
- * @param {boolean} strictMode - Strict mode setting
  * @returns {Object} - { contentType: string, isJson: boolean, data: any }
  */
-function createResponse(cleanedData, inputFormat, targetFormat, strictMode) {
+function createResponse(cleanedData, targetFormat) {
   const contentType = {
     'json': 'application/json',
     'xml': 'application/xml',
     'string': 'text/plain'
   }[targetFormat];
 
-  if (targetFormat === 'json') {
-    return {
-      contentType,
-      isJson: true,
-      data: cleanedData
-      // data: {
-      //   success: true,
-      //   inputFormat,
-      //   outputFormat: targetFormat,
-      //   strict: strictMode,
-      //   data: cleanedData
-      // }
-    };
-  }
-
   return {
     contentType,
-    isJson: false,
+    isJson: targetFormat === 'json',
     data: cleanedData
   };
 }
