@@ -1,6 +1,6 @@
 # API Format Converter
 
-A simple API service for converting data between different formats. This project provides endpoints to transform API input requests into responses designated by user.
+A simple API service for converting data between different formats. This project provides endpoints to transform API input requests into responses designated by user. This was a interview assignment for Orderful.
 
 ## Features
 
